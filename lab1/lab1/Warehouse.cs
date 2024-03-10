@@ -15,7 +15,7 @@ namespace lab1
         protected Product characteristics;
         protected DateTime lastRestockDate;
 
-        public Warehouse(string name, string unit, Money price, int quantity, DateTime lastRestockDate, Product characteristics)
+        public Warehouse(string name, string unit, Product price, int quantity, DateTime lastRestockDate, Product characteristics)
         {
             this.unit = unit;
             this.quantity = quantity;

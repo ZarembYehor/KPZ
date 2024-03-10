@@ -30,8 +30,8 @@ Console.WriteLine("\nТовари:");
 Console.WriteLine(product1);
 Console.WriteLine(product2);
 
-Warehouse warehouse1 = new Warehouse("Телефон", "pieces", dollar, 100, DateTime.Now, product1);
-Warehouse warehouse2 = new Warehouse("Рубашка", "items", euro, 50, DateTime.Now, product2);
+Warehouse warehouse1 = new Warehouse("Телефон", "pieces", product1, 100, DateTime.Now, product1);
+Warehouse warehouse2 = new Warehouse("Рубашка", "items", product2, 50, DateTime.Now, product2);
 
 Console.WriteLine("\nІнформація про склад:");
 Console.WriteLine(warehouse1);
