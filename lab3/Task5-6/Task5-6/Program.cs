@@ -1,49 +1,30 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 using Task5_6;
+Console.OutputEncoding = Encoding.Unicode;
+Console.InputEncoding = Encoding.Unicode;
+var root = new LightElementNodeWithLifecycle("div", "block", "normal", new List<string>());
 
-string[] lines = File.ReadAllLines("D:\\КПЗ\\KPZ\\lab3\\Task5-6\\Task5-6\\book.txt");
+var child1 = new LightElementNodeWithLifecycle("div", "block", "normal", new List<string> { "class1" });
+var child2 = new LightElementNodeWithLifecycle("p", "inline", "normal", new List<string> { "class2" });
+var textNode = LightTextNode.GetTextNode("Hello World");
 
-var html = new LightElementNode("html", "block", "closing", new List<string>());
-var h1 = new LightElementNode("h1", "block", "closing", new List<string>());
-h1.Children.Add(LightTextNode.GetTextNode(lines[0]));
-html.Children.Add(h1);
+child1.InsertChild(textNode);
+root.InsertChild(child1);
+root.InsertChild(child2);
 
-for (int i = 1; i < lines.Length; i++)
+Console.WriteLine("Глибокий обхід:");
+var depthIterator = new DepthFirstIterator(root);
+
+while (depthIterator.MoveNext())
 {
-    string line = lines[i];
-
-    if (line.Length < 20)
-    {
-        var h2 = new LightElementNode("h2", "block", "closing", new List<string>());
-        h2.Children.Add(LightTextNode.GetTextNode(lines[i]));
-        html.Children.Add(h2);
-    }
-    else if (!string.IsNullOrEmpty(line) && char.IsWhiteSpace(line[0]))
-    {
-        var blockquote = new LightElementNode("blockquote", "block", "closing", new List<string>());
-        blockquote.Children.Add(LightTextNode.GetTextNode(lines[i]));
-        html.Children.Add(blockquote);
-    }
-    else
-    {
-        var p = new LightElementNode("p", "block", "closing", new List<string>());
-        p.Children.Add(LightTextNode.GetTextNode(lines[i]));
-        html.Children.Add(p);
-    }
+    Console.WriteLine(depthIterator.Current);
 }
 
-html.PrintOuterHTML();
+Console.WriteLine("Широкий обхід:");
+var breadthIterator = new BreadthFirstIterator(root);
 
-long totalMemory = CalculateMemoryUsage(html);
-Console.WriteLine($"Size of tree: {totalMemory} byte");
-static long CalculateMemoryUsage(object obj)
+while (breadthIterator.MoveNext())
 {
-    GC.Collect();
-    GC.WaitForPendingFinalizers();
-    GC.Collect();
-
-    long totalMemory = GC.GetTotalMemory(true);
-
-    return totalMemory;
+    Console.WriteLine(breadthIterator.Current);
 }
