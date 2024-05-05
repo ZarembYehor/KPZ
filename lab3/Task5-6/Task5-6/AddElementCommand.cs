@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task5_6
 {
-    public class AddElementCommand : ICommand
+    public class AddElementCommand
     {
         private LightElementNodeWithLifecycle parent;
         private LightNode element;

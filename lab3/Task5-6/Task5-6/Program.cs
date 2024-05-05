@@ -3,8 +3,16 @@ using System.Text;
 using Task5_6;
 Console.OutputEncoding = Encoding.Unicode;
 Console.InputEncoding = Encoding.Unicode;
-var element = new StatefulElementNode("div", "block", "normal", new List<string>());
-element.SetState(new VisibleState());
-element.SetState(new HiddenState());
-element.SetState(new DisabledState());
-element.SetState(new VisibleState());
+var elements = new List<IElement>
+        {
+            new TextElement("Hello, World!"),
+            new ImageElement("/images/example.png"),
+            new TextElement(""),
+            new ImageElement("")
+        };
+var validationVisitor = new ValidationVisitor();
+foreach (var element in elements)
+{
+    element.Accept(validationVisitor);
+}
+Console.WriteLine($"All elements are valid: {validationVisitor.IsValid}");
