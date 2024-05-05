@@ -4,27 +4,17 @@ using Task5_6;
 Console.OutputEncoding = Encoding.Unicode;
 Console.InputEncoding = Encoding.Unicode;
 var root = new LightElementNodeWithLifecycle("div", "block", "normal", new List<string>());
-
-var child1 = new LightElementNodeWithLifecycle("div", "block", "normal", new List<string> { "class1" });
-var child2 = new LightElementNodeWithLifecycle("p", "inline", "normal", new List<string> { "class2" });
-var textNode = LightTextNode.GetTextNode("Hello World");
-
-child1.InsertChild(textNode);
-root.InsertChild(child1);
-root.InsertChild(child2);
-
-Console.WriteLine("Глибокий обхід:");
-var depthIterator = new DepthFirstIterator(root);
-
-while (depthIterator.MoveNext())
-{
-    Console.WriteLine(depthIterator.Current);
-}
-
-Console.WriteLine("Широкий обхід:");
-var breadthIterator = new BreadthFirstIterator(root);
-
-while (breadthIterator.MoveNext())
-{
-    Console.WriteLine(breadthIterator.Current);
-}
+var child1 = new LightElementNodeWithLifecycle("p", "inline", "normal", new List<string>());
+var child2 = new LightElementNodeWithLifecycle("span", "inline-block", "normal", new List<string>());
+var commandManager = new CommandManager();
+var addCommand1 = new AddElementCommand(root, child1);
+commandManager.ExecuteCommand(addCommand1);
+var addCommand2 = new AddElementCommand(root, child2);
+commandManager.ExecuteCommand(addCommand2);
+commandManager.UndoCommand();
+var textNode = LightTextNode.GetTextNode("Hello, World!");
+var addTextCommand = new AddElementCommand(child1, textNode);
+commandManager.ExecuteCommand(addTextCommand);
+var removeTextCommand = new RemoveElementCommand(child1, textNode);
+commandManager.ExecuteCommand(removeTextCommand);
+commandManager.UndoCommand();
