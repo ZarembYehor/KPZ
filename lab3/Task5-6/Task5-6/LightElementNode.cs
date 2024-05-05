@@ -81,7 +81,7 @@ namespace Task5_6
                 html.Append(">");
                 foreach (var child in Children)
                 {
-                    html.Append(child.ToString()); // Зміна тут
+                    html.Append(child.ToString());
                 }
                 html.Append($"</{TagName}>");
             }
